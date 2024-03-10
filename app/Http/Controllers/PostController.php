@@ -68,6 +68,6 @@ class PostController extends Controller
     }
     
     public function manage() {
-        return view('posts/manage', ['posts' => Post::latest()->paginate(8)]);
+        return view('admin/posts', ['posts' => Post::latest()->paginate(8)]);
     }
 }

@@ -34,7 +34,5 @@
         <button class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black">
             Sign In
         </button>
-
-        <p>Don't have an account? <a href="/register" class="text-red-500">Register</a></p>
     </form>
 </x-layout>
