@@ -2,12 +2,13 @@
     @include('partials._search')
 
     <div>
+        @auth
         <div class="mb-6">
             <div class="flex justify-end gap-6 mb-2">
                 <button class="text-gray-700">
                     <a href="/posts/{{$post->id}}/edit"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
                 </button>
-                <form method="POST" action="/posts/{{$post->id}}" class="text-red-500">
+                <form method="POST" autocomplete="off" action="/posts/{{$post->id}}" class="text-red-500">
                     @csrf
                     @method('DELETE')
                     <button><i class="fa-solid fa-trash"></i> Delete</button>
@@ -15,6 +16,7 @@
             </div>
             <hr>
         </div>
+        @endauth
         <h1 class="text-3xl font-semibold mb-4">
             {{ $post['title'] }}
         </h1>

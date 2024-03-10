@@ -5,7 +5,7 @@
 
     <hr class="my-8">
 
-    <form method="POST" action="/users/authenticate" class="flex flex-col gap-8">
+    <form method="POST" autocomplete="off" action="/users/authenticate" class="flex flex-col gap-8">
         @csrf
         <div>
             <label for="email" class="inline-block mb-2">
@@ -34,7 +34,5 @@
         <button class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black">
             Sign In
         </button>
-
-        <p>Don't have an account? <a href="/register" class="text-red-500">Register</a></p>
     </form>
 </x-layout>

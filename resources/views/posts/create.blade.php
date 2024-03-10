@@ -5,7 +5,7 @@
 
     <hr class="my-8">
 
-    <form method="POST" action="/posts" enctype="multipart/form-data" class="flex flex-col gap-8">
+    <form method="POST" autocomplete="off" action="/posts" enctype="multipart/form-data" class="flex flex-col gap-8">
         @csrf
         <div>
             <label for="title" class="inline-block mb-2">Title</label>
