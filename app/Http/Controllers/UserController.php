@@ -8,11 +8,12 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    public function create() {
+    public function create()
+    {
         return view('users/register');
     }
-
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $formFields = $request->validate([
             'name' => 'required',
             'email' => ['required', 'email', Rule::unique('users', 'email')],
@@ -21,16 +22,32 @@ class UserController extends Controller
 
         $formFields['password'] = bcrypt($formFields['password']);
 
-        // Create user
-        $user = User::create($formFields);
+        User::create($formFields);
 
-        // Login
-        auth()->login($user);
-
-        return redirect('/')->with('message', 'User created and logged in!');
+        return back()->with('message', 'User registrated successfully!');
     }
 
-    public function logout(Request $request) {
+    public function login()
+    {
+        return view('users/login');
+    }
+    public function authenticate(Request $request)
+    {
+        $formFields = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => 'required'
+        ]);
+
+        if (auth()->attempt($formFields)) {
+            $request->session()->regenerate();
+
+            return redirect('/')->with('message', 'You are now logged in!');
+        }
+
+        return back()->withErrors(['email', 'Invalid Credentials'])->onlyInput('email');
+    }
+    public function logout(Request $request)
+    {
         auth()->logout();
 
         $request->session()->invalidate();
@@ -39,22 +56,36 @@ class UserController extends Controller
         return redirect('/')->with('message', 'You have been logged out!');
     }
 
-    public function login() {
-        return view('users/login');
+    public function manage()
+    {
+        return view('admin/users', ['users' => User::latest()->paginate(8)]);
     }
-    
-    public function authenticate(Request $request) {
+    public function edit(User $user)
+    {
+        return view('users/edit', ['user' => $user]);
+    }
+    public function update(Request $request, User $user)
+    {
         $formFields = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => 'required'
+            'name' => 'required',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id)],
+            'password' => ['nullable', 'confirmed', 'min:6']
         ]);
 
-        if(auth()->attempt($formFields)){
-            $request->session()->regenerate();
-
-            return redirect('/')->with('message', 'You are now logged in!');
+        if (isset($formFields['password'])) {
+            $formFields['password'] = bcrypt($formFields['password']);
+        } else {
+            $formFields['password'] = $user->password;
         }
 
-        return back()->withErrors(['email', 'Invalid Credentials'])->onlyInput('email');
+        $user->update($formFields);
+
+        return back()->with('message', 'User updated successfully!');
+    }
+    public function destroy(User $user)
+    {
+        $user->delete();
+
+        return back()->with('message', 'User deleted successfully!');
     }
 }

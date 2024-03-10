@@ -28,7 +28,7 @@
             <ul class="flex space-x-6">
                 @auth
                     <li>
-                        <a href="/posts/manage"><i class="fa-solid fa-bars mr-1"></i> Manage posts</a>
+                        <a href="/admin"><i class="fa-solid fa-gear mr-1"></i> Admin panel</a>
                     </li>
                     <li>
                         <form class="inline" action="/logout" method="post">
@@ -36,13 +36,6 @@
                             <button type="submit" href="/"><i class="fa-solid fa-right-from-bracket mr-1"></i>
                                 Logout</button>
                         </form>
-                    </li>
-                @else
-                    <li>
-                        <a href="/register">Register</a>
-                    </li>
-                    <li>
-                        <a href="/login">Login</a>
                     </li>
                 @endauth
             </ul>
@@ -53,12 +46,13 @@
         {{ $slot }}
     </main>
 
-    <footer class="fixed bottom-0 left-0 w-full font-bold text-white h-16">
-        <div class="lg:max-w-5xl w-full mx-auto px-4 flex justify-center">
-            <a href="/posts/create" class="bg-red-500 text-white py-2 px-5 rounded">Create new post</a>
-        </div>
-    </footer>
-
+    @auth
+        <footer class="fixed bottom-0 left-0 w-full font-bold text-white h-16">
+            <div class="lg:max-w-5xl w-full mx-auto px-4 flex justify-center">
+                <a href="/posts/create" class="bg-red-500 text-white py-2 px-5 rounded">Create new post</a>
+            </div>
+        </footer>
+    @endauth
     <x-toast />
 </body>
 
