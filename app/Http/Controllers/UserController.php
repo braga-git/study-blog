@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function create()
     {
-        return view('users/register');
+        return view('users/register', ['roles' => Role::all()]);
     }
     public function store(Request $request)
     {
@@ -22,7 +23,12 @@ class UserController extends Controller
 
         $formFields['password'] = bcrypt($formFields['password']);
 
-        User::create($formFields);
+        $user = User::create($formFields);
+
+        if ($request->role) {
+            $role = $request->role;
+            $user->assignRole($role);
+        }
 
         return back()->with('message', 'User registrated successfully!');
     }
@@ -62,7 +68,7 @@ class UserController extends Controller
     }
     public function edit(User $user)
     {
-        return view('users/edit', ['user' => $user]);
+        return view('users/edit', ['user' => $user, 'roles' => Role::all(), 'currentRole' => $user->getRoleNames()->first()] );
     }
     public function update(Request $request, User $user)
     {
@@ -79,6 +85,12 @@ class UserController extends Controller
         }
 
         $user->update($formFields);
+
+        $role = $request->role;
+
+        if (!$user->hasRole($role)) {
+            $user->syncRoles([$role]);
+        }
 
         return back()->with('message', 'User updated successfully!');
     }

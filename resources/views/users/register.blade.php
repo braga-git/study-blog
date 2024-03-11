@@ -53,6 +53,16 @@
             @enderror
         </div>
 
+        <div>
+            <label class="inline-block mb-2">Role</label>
+            <select class="bg-white border border-gray-200 rounded p-2 py-2.5 w-full" name="role">
+                @foreach ($roles as $role)
+                    <option class="p-2.5" value="{{ $role['name'] }}"
+                        {{ old('role') == $role['name'] ? 'selected' : '' }}>{{ ucfirst(trans($role->name)) }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button class="bg-red-500 text-white rounded py-2 px-4 hover:bg-black">
             Register
         </button>
