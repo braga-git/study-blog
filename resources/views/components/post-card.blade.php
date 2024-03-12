@@ -6,7 +6,7 @@
     </div>
     <div class="p-6 flex flex-col">
         <span class="text-sm font-semibold">
-            {{ $post['updated_at'] }}
+            {{ $post['updated_at']->format('l, d/m/Y | h:i A') }}
         </span>
         <h3 class="text-xl font-semibold my-4">
             <a href="/posts/{{ $post['id'] }}">

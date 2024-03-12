@@ -24,7 +24,7 @@
             {{ $post['description'] }}
         </p>
         <span class="text-sm font-semibold">
-            {{ $post['updated_at'] }}
+            {{ $post['updated_at']->format('l, d/m/Y | h:i A') }}
         </span>
 
         <div class="border rounded overflow-hidden my-8">
