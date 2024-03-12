@@ -46,13 +46,15 @@
         {{ $slot }}
     </main>
 
-    @auth
-        <footer class="fixed bottom-0 left-0 w-full font-bold text-white h-16">
-            <div class="lg:max-w-5xl w-full mx-auto px-4 flex justify-center">
-                <a href="/posts/create" class="bg-red-500 text-white py-2 px-5 rounded">Create new post</a>
-            </div>
-        </footer>
-    @endauth
+    @if (Route::currentRouteName() == 'posts.index')
+        @auth
+            <footer class="fixed bottom-0 left-0 w-full font-bold text-white h-16">
+                <div class="lg:max-w-5xl w-full mx-auto px-4 flex justify-center">
+                    <a href="/posts/create" class="bg-red-500 text-white py-2 px-5 rounded">Create new post</a>
+                </div>
+            </footer>
+        @endauth
+    @endif
     <x-toast />
 </body>
 
