@@ -11,46 +11,37 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="//unpkg.com/alpinejs" defer></script>
+    @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <title>BLOG 1 | Laravel Only</title>
 
     <style>
         * {
-            font-family: 'Inter', sans-serif;
+            font-family: "Poppins", sans-serif;
         }
     </style>
 </head>
 
-<body class="mb-48">
-    <nav class="bg-neutral-900 text-white py-4 mb-5">
-        <div class="lg:max-w-5xl mx-auto px-4 flex justify-between items-center">
-            <a class="text-2xl font-bold" href="/">BLOG 1</a>
-            <ul class="flex space-x-6">
-                @auth
-                    <li>
-                        <a href="/admin"><i class="fa-solid fa-gear mr-1"></i> Admin panel</a>
-                    </li>
-                    <li>
-                        <form class="inline" action="/logout" method="post">
-                            @csrf
-                            <button type="submit" href="/"><i class="fa-solid fa-right-from-bracket mr-1"></i>
-                                Logout</button>
-                        </form>
-                    </li>
-                @endauth
-            </ul>
-        </div>
-    </nav>
+<body class="bg-stone-100">
+    <div class="">
+        <x-nav />
+    </div>
 
-    <main class="lg:max-w-5xl mx-auto px-4">
+    <main class="bg-white lg:max-w-7xl mx-auto">
         {{ $slot }}
     </main>
 
-    @if (Route::currentRouteName() == 'posts.index')
+    @if (Route::currentRouteName() == 'pages.posts')
         @auth
             <footer class="fixed bottom-0 left-0 w-full font-bold text-white h-16">
                 <div class="lg:max-w-5xl w-full mx-auto px-4 flex justify-center">
-                    <a href="/posts/create" class="bg-red-500 text-white py-2 px-5 rounded">Create new post</a>
+                    <a href="/posts/create" class="bg-red-500 text-white py-2 px-5 rounded">Create
+                        new post</a>
                 </div>
             </footer>
         @endauth
