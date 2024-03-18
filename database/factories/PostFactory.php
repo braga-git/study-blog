@@ -20,7 +20,9 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->paragraph(3),
             'text' => $this->faker->paragraph(16),
-            'tags' => 'contemporâneo, hip-hop, wacking'
+            'tags' => 'contemporâneo, hip-hop, wacking',
+            'importance' => $this->faker->numberBetween(1,5),
+            'status' => $this->faker->numberBetween(1,2) == 2 ? 'inactive' : 'active'
         ];
     }
 }

@@ -48,6 +48,28 @@
         </div>
 
         <div>
+            <label for="importance" class="inline-block mb-2">
+                Importance
+            </label>
+            <input type="number" class="border border-gray-200 rounded p-2 w-full" name="importance" placeholder="1-5"
+                min="1" max="5" value="{{ old('importance') }}" />
+
+            @error('importance')
+                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <label class="inline-block mb-2">Status</label>
+            <select class="bg-white border border-gray-200 rounded p-2 py-2.5 w-full" name="status">
+                @foreach (['active', 'inactive'] as $status)
+                    <option class="p-2.5" value="{{ $status }}"
+                        {{ old('status') == $status ? 'selected' : '' }}>{{ ucfirst(trans($status)) }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div>
             <label for="banner" class="inline-block mb-2">
                 Banner
             </label>
