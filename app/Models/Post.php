@@ -9,12 +9,23 @@ class Post extends Model
 {
     use HasFactory;
 
-    public function scopeFilter($query, array $filters) {
-        if($filters['tag'] ?? false) {
+    public function scopeFilter($query, array $filters, $ambient = null)
+    {
+        if ($filters['tag'] ?? false) {
             $query->where('tags', 'like', '%' . request('tag') . '%');
         }
 
-        if($filters['search'] ?? false) {
+        if ($ambient == 'admin') {
+            if ($filters['search'] ?? false) {
+                $query->where('id', 'like', '%' . request('search') . '%')
+                    ->orWhere('title', 'like', '%' . request('search') . '%')
+                    ->orWhere('description', 'like', '%' . request('search') . '%')
+                    ->orWhere('text', 'like', '%' . request('search') . '%')
+                    ->orWhere('tags', 'like', '%' . request('search') . '%');
+            }
+        }
+
+        if ($filters['search'] ?? false) {
             $query->where('title', 'like', '%' . request('search') . '%')
                 ->orWhere('description', 'like', '%' . request('search') . '%')
                 ->orWhere('text', 'like', '%' . request('search') . '%')
