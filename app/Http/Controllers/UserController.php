@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function create()
     {
-        return view('users/register', ['roles' => Role::all()]);
+        return view('users/create', ['roles' => Role::all()]);
     }
     public function store(Request $request)
     {
@@ -64,7 +64,7 @@ class UserController extends Controller
 
     public function manage()
     {
-        return view('admin/users', ['users' => User::latest()->paginate(8)]);
+        return view('admin/users', ['users' => User::filter(request(['search']))->paginate(8)]);
     }
     public function edit(User $user)
     {
